@@ -14,6 +14,7 @@ addons:
       - libopencv-core-dev
       - libgoogle-glog-dev
       - libgflags-dev
+      - g++-9
 
 # the install step will take care of deploying a newer cmake version
 install:    
@@ -40,8 +41,12 @@ before_script:
   - cd build
   # run cmake; here we assume that the project's
   # top-level CMakeLists.txt is located at '..'
+  - cmake --version
   - cmake ..
 
 script:
+  - export CC=gcc-9
+  - export CXX=g++-9
+  - g++ -v
   # once CMake has done its job we just build using make as usual
   - make
