@@ -34,6 +34,8 @@ install:
   - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
   # don't forget to switch back to the main build directory once you are done
   - cd ${TRAVIS_BUILD_DIR}
+  - export CC="gcc-9"
+  - export CXX="g++-9"
 
 before_script:
   # create a build folder for the out-of-source build
@@ -46,9 +48,6 @@ before_script:
   - cmake ..
 
 script:
-  - export CC=gcc-9
-  - export CXX=g++-9
-  - sudo apt install g++-9 gcc-9
   - gcc -v
   - g++ -v
   # once CMake has done its job we just build using make as usual
