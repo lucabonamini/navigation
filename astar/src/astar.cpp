@@ -91,7 +91,6 @@ namespace astar {
         const std::vector<float>& map_y,
         const int& resolution,
         const float& robot_size) {
-
             std::vector<int> px,py; // Map in pixel coordinates
             Node start;
             start.x = static_cast<int>(std::round(start_x/resolution));
