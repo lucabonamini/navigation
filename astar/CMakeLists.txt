@@ -14,7 +14,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpessimizing-move -Wredundant-move")
   endif()
 endif()
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
@@ -28,17 +28,17 @@ list(APPEND SRCS
   src/astar.cpp
 )
 
-add_executable(${CMAKE_PROJECT_NAME} 
+add_executable(${PROJECT_NAME} 
   src/main.cpp ${SRCS}
 )
-target_link_libraries(${CMAKE_PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}
   ${OpenCV_LIBS}
   glog
   gflags
 )
 
 
-install(TARGETS ${CMAKE_PROJECT_NAME} 
+install(TARGETS ${PROJECT_NAME} 
   ARCHIVE DESTINATION /usr/local/lib 
   LIBRARY DESTINATION /usr/local/lib
 )
