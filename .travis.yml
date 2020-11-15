@@ -10,6 +10,8 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - libeigen3-dev
+      - libopencv-dev
+      - libopencv-core-dev
 
 # the install step will take care of deploying a newer cmake version
 install:    
