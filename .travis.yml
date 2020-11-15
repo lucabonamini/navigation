@@ -5,12 +5,12 @@ compiler:
  
  os: linux
  addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - cmake
-            - libeigen3-dev
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+        packages:
+          - cmake
+          - libeigen3-dev
 
 # the install step will take care of deploying a newer cmake version
 install:    
