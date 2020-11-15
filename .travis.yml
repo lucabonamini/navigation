@@ -12,6 +12,8 @@ addons:
       - libeigen3-dev
       - libopencv-dev
       - libopencv-core-dev
+      - libgoogle-glog-dev
+      - libgflags-dev
 
 # the install step will take care of deploying a newer cmake version
 install:    
