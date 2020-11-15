@@ -48,6 +48,7 @@ before_script:
 script:
   - export CC=gcc-9
   - export CXX=g++-9
+  - sudo apt install g++-9 gcc-9
   - gcc -v
   - g++ -v
   # once CMake has done its job we just build using make as usual
