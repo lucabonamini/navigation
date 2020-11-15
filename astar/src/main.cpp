@@ -3,7 +3,6 @@
 #include "glog/logging.h"
 
 int main() {
-
     // Start point
     float sx = 10.0;
     float sy = 10.0;
