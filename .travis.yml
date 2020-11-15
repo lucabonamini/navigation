@@ -1,8 +1,19 @@
 language: cpp
-compiler:
-    - gcc
-notifications:
-    email: false
-sudo: false
+compiler: gcc
+
+os: linux
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-9
+
 script:
-    - mkdir build && cd build && cmake .. && make
+  - export CC=gcc-9
+  - export CXX=g++-9
+  - cmake --version
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
