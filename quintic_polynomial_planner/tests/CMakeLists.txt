@@ -22,9 +22,16 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 ########
 
 find_package(OpenCV REQUIRED)
+find_package(PythonLibs 3.0)
 
 add_executable(example_quintic_planner example_quintic_planner.cpp)
-target_link_libraries(example_quintic_planner glog gflags ${OpenCV_LIBS} quintic_polynomial_planner)
+target_include_directories(example_quintic_planner PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(example_quintic_planner
+  glog
+  gflags
+  ${OpenCV_LIBS}
+  quintic_polynomial_planner
+  ${PYTHON_LIBRARIES})
 
 #### TESTS ####
 add_executable(test_quintic_planner test_quintic_planner.cpp)

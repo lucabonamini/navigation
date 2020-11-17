@@ -4,6 +4,8 @@
 #include<opencv2/opencv.hpp>
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
+#include "quintic_polynomial_planner/matplotlibcpp.h"
+
 
 using namespace QuinticPolynomialPlanner;
 
@@ -45,21 +47,15 @@ int main(int argc, char** argv) {
     if (!output) {
         LOG(ERROR) << "No path found.";
     } else {
-          cv::Mat bg(2000, 2000, CV_8UC3, cv::Scalar(255, 255, 255));
-            for(unsigned int i=1; i<output->rx.size(); i++){
-                cv::line(
-                bg,
-                cv_offset(output->rx[i-1], output->ry[i-1], bg.cols, bg.rows),
-                cv_offset(output->rx[i], output->ry[i], bg.cols, bg.rows),
-                cv::Scalar(0, 0, 0),
-                10);
-            }
-            cv::circle(bg, cv_offset(FLAGS_start_x, FLAGS_start_y, bg.cols, bg.rows),
-                30, cv::Scalar(255,0,0), 5);
-            cv::circle(bg, cv_offset(FLAGS_goal_x, FLAGS_goal_y, bg.cols, bg.rows),
-                30, cv::Scalar(255,0,0), 5);
-
-              cv::imwrite("./csp.png", bg);
+        std::vector<double> x,y;
+        x.push_back(FLAGS_start_x);
+        x.push_back(FLAGS_goal_x);
+        y.push_back(FLAGS_start_y);
+        y.push_back(FLAGS_goal_y);
+        matplotlibcpp::plot(output->rx,output->ry,"-k");
+        matplotlibcpp::plot(x,y,"ob");
+        matplotlibcpp::title("Quintic Polynomial Path");
+        matplotlibcpp::show();
     }
     return 0;
 }
