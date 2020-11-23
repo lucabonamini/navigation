@@ -15,9 +15,9 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   endif()
 endif()
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 
 find_package(Eigen3 REQUIRED)
-find_package(OpenCV REQUIRED)
 
 include_directories(
   include/
@@ -28,15 +28,9 @@ list(APPEND SRCS
   src/astar.cpp
 )
 
-add_executable(${PROJECT_NAME} 
-  src/main.cpp ${SRCS}
+add_library(${PROJECT_NAME} SHARED
+  ${SRCS}
 )
-target_link_libraries(${PROJECT_NAME}
-  ${OpenCV_LIBS}
-  glog
-  gflags
-)
-
 
 install(TARGETS ${PROJECT_NAME} 
   ARCHIVE DESTINATION /usr/local/lib 

@@ -1,7 +1,7 @@
-#include <cubic_spline_planner/cubic_spline_planner.h>
+#include <quintic_polynomial_planner/quintic_polynomial_planner.h>
 #include <gflags/gflags.h>
 #include <glog/logging.h>
-#include "cubic_spline_planner/matplotlibcpp.h"
+#include "quintic_polynomial_planner/matplotlibcpp.h"
 
 using namespace QuinticPolynomialPlanner;
 
