@@ -69,7 +69,7 @@ namespace QuinticPolynomialPlanner {
 } // QuinticPolynomialPlanner
 
 /**
- * @brief Class for Quartic Polynomial calculation
+ * @brief Class for Quintic Polynomial calculation
  * @param xs_ Start position
  * @param vxs_ Start velocity
  * @param axs_ Start acceleration

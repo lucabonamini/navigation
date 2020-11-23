@@ -31,9 +31,6 @@ add_library(${PROJECT_NAME} SHARED
   ${SRCS}
 )
 
-enable_testing()
-add_subdirectory(tests)
-
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION /usr/local/lib
   LIBRARY DESTINATION /usr/local/lib
