@@ -1,7 +1,7 @@
 #include "astar/astar.h"
 
 namespace astar {
-    std::vector<std::vector<float> > calcFinalPath(Node goal, float reso, cv::Mat& img, float img_reso){
+    std::vector<std::vector<float> > calcFinalPath(Node goal, float reso){
         std::vector<float> rx;
         std::vector<float> ry;
         Node node = goal;
@@ -9,10 +9,6 @@ namespace astar {
             node = *node.p_node;
             rx.push_back(node.x * reso);
             ry.push_back(node.y * reso);
-            cv::rectangle(img,
-                cv::Point(node.x*img_reso+1, node.y*img_reso+1),
-                cv::Point((node.x+1)*img_reso, (node.y+1)*img_reso),
-                cv::Scalar(255, 0, 0), -1);
         }
         return {rx,ry};
     }
@@ -24,9 +20,7 @@ namespace astar {
         long unsigned int min_oy,
         long unsigned int max_oy,
         const float& resolution,
-        const float& robot_size,
-        cv::Mat& bg,
-        long unsigned int img_reso) {
+        const float& robot_size) {
             long unsigned int xwidth = max_ox-min_ox;
             long unsigned int ywidth = max_oy-min_oy;
 
@@ -41,10 +35,6 @@ namespace astar {
                         float d = std::sqrt(std::pow((px[k]-x), 2)+std::pow((py[k]-y), 2));
                         if (d <= robot_size/resolution){
                             obmap[i][j] = 1;
-                            cv::rectangle(bg,
-                                        cv::Point(i*img_reso+1, j*img_reso+1),
-                                        cv::Point((i+1)*img_reso, (j+1)*img_reso),
-                                        cv::Scalar(0, 0, 0), -1);
                             break;
                         }
                     }
@@ -121,23 +111,6 @@ namespace astar {
             int xwidth = max_ox-min_ox;
             int ywidth = max_oy-min_oy;
 
-            //visualization
-            cv::namedWindow("astar", cv::WINDOW_NORMAL);
-            int count = 0;
-            int img_reso = 5;
-            cv::Mat bg(img_reso*xwidth,
-                        img_reso*ywidth,
-                        CV_8UC3,
-                        cv::Scalar(255,255,255));
-            cv::rectangle(bg,
-                        cv::Point(start_x*img_reso+1, start_y*img_reso+1),
-                        cv::Point((start_x+1)*img_reso, (start_y+1)*img_reso),
-                        cv::Scalar(255, 0, 0), -1);
-            cv::rectangle(bg,
-                        cv::Point(goal_x*img_reso+1, goal_y*img_reso+1),
-                        cv::Point((goal_x+1)*img_reso, (goal_y+1)*img_reso),
-                        cv::Scalar(0, 0, 255), -1);
-
             std::vector<std::vector<int>> visited_map(static_cast<long unsigned int>(xwidth),
                 std::vector<int>(static_cast<long unsigned int>(ywidth),0));
 
@@ -154,10 +127,7 @@ namespace astar {
                 static_cast<long unsigned int>(min_oy),
                 static_cast<long unsigned int>(max_oy),
                 resolution,
-                robot_size,
-                bg,
-                static_cast<long unsigned int>(img_reso)
-                );
+                robot_size);
 
             auto cmp = [](const Node left, const Node right){return left.sum_cost > right.sum_cost;};
             std::priority_queue<Node,std::vector<Node>, decltype(cmp)> pq(cmp);
@@ -196,15 +166,6 @@ namespace astar {
                         continue;
                     }
 
-                    cv::rectangle(bg,
-                    cv::Point(new_node.x*img_reso+1, new_node.y*img_reso+1),
-                    cv::Point((new_node.x+1)*img_reso, (new_node.y+1)*img_reso),
-                    cv::Scalar(0, 255, 0));
-
-                    count++;
-                    cv::imshow("astar", bg);
-                    cv::waitKey(5);
-
                     if (path_cost.at(node.x).at(node.y)+motion.at(i).sum_cost < path_cost.at(new_node.x).at(new_node.y)) {
                         path_cost.at(new_node.x).at(new_node.y)=path_cost.at(node.x).at(node.y)+motion.at(i).sum_cost;
                         pq.push(new_node);
@@ -212,9 +173,6 @@ namespace astar {
                 }
             }
 
-            calcFinalPath(goal, resolution, bg, img_reso);
-
-            cv::imshow("astar", bg);
-            cv::waitKey(50);
+            calcFinalPath(goal, resolution);
     }
 }

@@ -1,7 +1,7 @@
 #include <quintic_polynomial_planner/quintic_polynomial_planner.h>
 #include <gflags/gflags.h>
 #include <glog/logging.h>
-#include "quintic_polynomial_planner/matplotlibcpp.h"
+#include "matplotlibcpp.h"
 
 using namespace QuinticPolynomialPlanner;
 

@@ -1,7 +1,7 @@
-#include "cubic_spline_planner/cubic_spline_planner.h"
+#include <lqr/lqr.h>
 #include "matplotlibcpp.h"
 
-using namespace CubicSplinePlanner;
+using namespace Lqr;
 
 int main(int argc, char** argv) {
     

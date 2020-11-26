@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <quintic_polynomial_planner/quintic_polynomial_planner.h>
+#include "quintic_polynomial_planner/quintic_polynomial_planner.h"
 
 using namespace std;
 using namespace QuinticPolynomialPlanner;

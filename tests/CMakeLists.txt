@@ -2,13 +2,12 @@ find_package(PythonLibs 3.0)
 find_package(OpenCV REQUIRED)
 
 # AStar
-add_executable(example_astar
-  src/example_astar.cpp ${SRCS}
-)
+add_executable(example_astar example_astar.cpp)
 target_link_libraries(example_astar
   ${OpenCV_LIBS}
   glog
   gflags
+  astar
 )
 
 # Cubic
@@ -26,6 +25,17 @@ target_link_libraries(example_quintic_planner
   glog
   gflags
   quintic_polynomial_planner
+  ${PYTHON_LIBRARIES}
+)
+
+# Lqr
+add_executable(example_lqr example_lqr.cpp)
+target_include_directories(example_lqr PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(example_lqr
+  glog
+  gflags
+  cubic_spline_planner
+  lqr
   ${PYTHON_LIBRARIES}
 )
 
