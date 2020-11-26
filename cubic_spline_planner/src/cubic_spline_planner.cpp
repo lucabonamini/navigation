@@ -1,4 +1,4 @@
-#include "cubic_spline_planner/cubic_spline_planner.h"
+#include "cubic_spline_planner.h"
 #include <eigen3/unsupported/Eigen/MatrixFunctions>
 
 namespace CubicSplinePlanner {
