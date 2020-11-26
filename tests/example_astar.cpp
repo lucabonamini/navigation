@@ -1,6 +1,9 @@
 #include "astar/astar.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 int main() {
     // Start point

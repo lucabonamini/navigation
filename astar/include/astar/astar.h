@@ -7,9 +7,6 @@
 #include <queue>
 #include <tuple>
 #include <memory>
-#include <opencv2/opencv.hpp>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
 struct Node {
     int x; // px
@@ -48,9 +45,7 @@ namespace astar {
         long unsigned int min_oy,
         long unsigned int max_oy,
         const float& resolution,
-        const float& robot_size,
-        cv::Mat& bg,
-        long unsigned int img_reso);
+        const float& robot_size);
 }
 
 #endif
