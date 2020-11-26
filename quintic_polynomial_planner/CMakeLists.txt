@@ -32,6 +32,16 @@ add_library(${PROJECT_NAME} SHARED
   ${SRCS}
 )
 
+target_include_directories(${PROJECT_NAME} PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
+    $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION /usr/local/lib
   LIBRARY DESTINATION /usr/local/lib

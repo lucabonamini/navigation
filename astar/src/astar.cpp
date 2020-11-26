@@ -1,4 +1,4 @@
-#include "astar/astar.h"
+#include "astar.h"
 
 namespace astar {
     std::vector<std::vector<float> > calcFinalPath(Node goal, float reso){

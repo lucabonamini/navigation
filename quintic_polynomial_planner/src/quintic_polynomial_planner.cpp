@@ -1,4 +1,4 @@
-#include <quintic_polynomial_planner/quintic_polynomial_planner.h>
+#include "quintic_polynomial_planner.h"
 #include <eigen3/unsupported/Eigen/MatrixFunctions>
 
 namespace QuinticPolynomialPlanner {
