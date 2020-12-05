@@ -64,6 +64,17 @@ target_link_libraries(example_lqr
   Python3::NumPy
 )
 
+# Pid
+add_executable(example_pid example_pid.cpp)
+target_link_libraries(example_pid
+  glog
+  gflags
+  cubic_spline_planner
+  pid
+  Python3::Python
+  Python3::NumPy
+)
+
 #### TESTS ####
 add_executable(test_quintic_planner test_quintic_planner.cpp)
 target_link_libraries(test_quintic_planner gtest_main quintic_polynomial_planner)

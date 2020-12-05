@@ -5,6 +5,7 @@ add_subdirectory (astar)
 add_subdirectory (quintic_polynomial_planner)
 add_subdirectory (cubic_spline_planner)
 add_subdirectory (lqr)
+add_subdirectory (pid)
 
 option(BUILD_TESTS "Build tests" OFF)
 if (${BUILD_TESTS})
