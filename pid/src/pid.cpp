@@ -10,8 +10,11 @@ double Pid::updateError(const double& error) {
 }
 
 double Pid::calcError(const State& state,
-    const double& closest_x,
-    const double& closest_y) {
-        return std::sqrt((state.x - closest_x)*(state.x - closest_x) + (state.y - closest_y)*(state.y - closest_y));
-        // return std::atan2((state.y - closest_y),(state.x - closest_x));
+    const std::pair<int,double>& track_error,
+    const std::vector<double>& ryaw) {
+        double theta_e = ryaw.at(track_error.first)-state.theta;
+        normalizeAngle(theta_e);
+        double theta_d = std::atan2(0.5*track_error.second,state.v);
+        double steer = theta_e+theta_d;
+        return(updateError(steer));
 }

@@ -22,8 +22,11 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 ########
 
-
-find_package(Python3 COMPONENTS Development NumPy)
+# find python libraries
+find_package(Python2 COMPONENTS Interpreter Development NumPy REQUIRED)
+# find_package(PythonLibs 3.0 REQUIRED)
+# include_directories(${PYTHON3_INCLUDE_DIRS} ${NumPy_INCLUDE_DIRS})
+# find_package(PythonLibs 2.7)
 find_package(OpenCV REQUIRED)
 
 # AStar
@@ -37,10 +40,12 @@ target_link_libraries(example_astar
 
 # Cubic
 add_executable(example_cubic_spline_planner example_cubic_spline_planner.cpp)
+target_include_directories(example_cubic_spline_planner PRIVATE ${PYTHON_INCLUDE_DIRS})
 target_link_libraries(example_cubic_spline_planner
   cubic_spline_planner
-  Python3::Python
-  Python3::NumPy
+  Python2::Python
+  Python2::NumPy
+  # ${PYTHON_LIBRARIES}
 )
 
 # Quintic
@@ -49,8 +54,9 @@ target_link_libraries(example_quintic_planner
   glog
   gflags
   quintic_polynomial_planner
-  Python3::Python
-  Python3::NumPy
+  Python2::Python
+  Python2::NumPy
+  # ${PYTHON_LIBRARIES}
 )
 
 # Lqr
@@ -60,8 +66,9 @@ target_link_libraries(example_lqr
   gflags
   cubic_spline_planner
   lqr
-  Python3::Python
-  Python3::NumPy
+  Python2::Python
+  Python2::NumPy
+  # ${PYTHON_LIBRARIES}
 )
 
 # Pid
@@ -71,8 +78,21 @@ target_link_libraries(example_pid
   gflags
   cubic_spline_planner
   pid
-  Python3::Python
-  Python3::NumPy
+  Python2::Python
+  Python2::NumPy
+  # ${PYTHON_LIBRARIES}
+)
+
+# GA
+add_executable(ga ga.cpp)
+target_link_libraries(ga
+  glog
+  gflags
+  cubic_spline_planner
+  pid
+  Python2::Python
+  Python2::NumPy
+  # ${PYTHON_LIBRARIES}
 )
 
 #### TESTS ####
