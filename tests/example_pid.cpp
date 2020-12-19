@@ -6,9 +6,6 @@ constexpr int MAX_TIME = 5000;
 
 int main(int argc, char** argv) {
 
-    // rapidcsv::Document doc("/home/luca/navigation/tests/map.csv");
-    // std::vector<double> wx = doc.GetColumn<double>("X");
-    // std::vector<double> wy = doc.GetColumn<double>("Y");
     std::vector<double> wx {-2.5,0.0,2.5,5.0,7.5,3.0,-1.0};
     std::vector<double> wy {0.7,-6.0,2.0,-4.0,0.0,5.0,-2.0};
     int time = 0;
@@ -33,30 +30,29 @@ int main(int argc, char** argv) {
     RobotModel rm(init);
     std::vector<double> offtrack_errors;
 
-    Pid pid(13.0,0.00001,0.0);
+    Pid pid(1.26836,5.37114e-07,1.26836);
     while(time < MAX_TIME) {
         double velocity = 0.1;
         auto track_error = findClosestIndex(pid.closest_index,rm.state_,rx,ry);
         pid.closest_index = track_error.first;
-        
+
         auto steer = pid.calcError(rm.state_,track_error,ryaw);
 
         if (steer < -30*M_PI/180) {
             steer = -30*M_PI/180;
         } else if (steer > 30*M_PI/180) {
-            steer = 30*M_PI/180; 
+            steer = 30*M_PI/180;
         }
         rm.updateState(steer,velocity);
 
-        auto dist_from_goal = std::sqrt((rm.state_.x - rx.back())*(rm.state_.x - rx.back()) + (rm.state_.y - ry.back())*(rm.state_.y - ry.back()));
-        offtrack_errors.push_back(track_error.second);
+        auto dist_from_goal = std::sqrt((rm.state_.x - rx.back())*(rm.state_.x - rx.back()) +
+            (rm.state_.y - ry.back())*(rm.state_.y - ry.back()));
+        double curr_closest_dist = std::sqrt((rm.state_.x - rx.at(track_error.first))*(rm.state_.x - rx.at(track_error.first)) +
+            (rm.state_.y - ry.at(track_error.second))*(rm.state_.y - ry.at(track_error.second)));
+        offtrack_errors.push_back(curr_closest_dist);
+
         if (dist_from_goal < 0.1) {
             std::cout << "==== GOAL ====" << std::endl;
-            double value = 0.0;
-            for (auto err:offtrack_errors) {
-                value+=abs(err);
-            }
-            std::cout << "value: " << 1.0/value << std::endl;
             break;
         }
         time++;

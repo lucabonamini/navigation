@@ -16,6 +16,5 @@ double Pid::calcError(const State& state,
         normalizeAngle(theta_e);
         double theta_d = std::atan2(0.5*track_error.second,state.v);
         double steer = theta_e+theta_d;
-        // return steer;
         return(updateError(steer));
 }
