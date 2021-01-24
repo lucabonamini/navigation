@@ -1,4 +1,4 @@
-project(lqr)
+project(mpc)
 cmake_minimum_required(VERSION 3.18.2)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -25,7 +25,7 @@ include_directories(
 )
 
 list(APPEND SRCS
-  src/lqr.cpp
+  src/mpc.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED
@@ -46,6 +46,7 @@ target_link_libraries(${PROJECT_NAME}
   glog
   gflags
   cubic_spline_planner
+  ipopt
 )
 
 install(TARGETS ${PROJECT_NAME}

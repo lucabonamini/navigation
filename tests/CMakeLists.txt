@@ -1,4 +1,5 @@
 set(CMAKE_CXX_STANDARD 20)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 #### Setup GoogleTest ####
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -24,9 +25,6 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 
 # find python libraries
 find_package(Python2 COMPONENTS Interpreter Development NumPy REQUIRED)
-# find_package(PythonLibs 3.0 REQUIRED)
-# include_directories(${PYTHON3_INCLUDE_DIRS} ${NumPy_INCLUDE_DIRS})
-# find_package(PythonLibs 2.7)
 find_package(OpenCV REQUIRED)
 
 # AStar
@@ -45,7 +43,6 @@ target_link_libraries(example_cubic_spline_planner
   cubic_spline_planner
   Python2::Python
   Python2::NumPy
-  # ${PYTHON_LIBRARIES}
 )
 
 # Quintic
@@ -56,19 +53,6 @@ target_link_libraries(example_quintic_planner
   quintic_polynomial_planner
   Python2::Python
   Python2::NumPy
-  # ${PYTHON_LIBRARIES}
-)
-
-# Lqr
-add_executable(example_lqr example_lqr.cpp)
-target_link_libraries(example_lqr
-  glog
-  gflags
-  cubic_spline_planner
-  lqr
-  Python2::Python
-  Python2::NumPy
-  # ${PYTHON_LIBRARIES}
 )
 
 # Pid
@@ -80,7 +64,6 @@ target_link_libraries(example_pid
   pid
   Python2::Python
   Python2::NumPy
-  # ${PYTHON_LIBRARIES}
 )
 
 # GA
@@ -92,7 +75,17 @@ target_link_libraries(ga
   pid
   Python2::Python
   Python2::NumPy
-  # ${PYTHON_LIBRARIES}
+)
+
+# MPC
+add_executable(example_mpc example_mpc.cpp)
+target_link_libraries(example_mpc
+  glog
+  gflags
+  cubic_spline_planner
+  mpc
+  Python2::Python
+  Python2::NumPy
 )
 
 #### TESTS ####

@@ -1,5 +1,4 @@
 #include "pid/pid.h"
-#include "rapidcsv.h"
 #include "matplotlibcpp.h"
 
 constexpr int MAX_TIME = 5000;
