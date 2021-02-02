@@ -1,13 +1,9 @@
 #include "mpc/mpc.h"
 
-bool MPC::run() {
+void MPC::run() {
     while (MAX_ITERATION > iteration_counter_) {
         calcReferenceTrajectory_();
         auto control = solveMpc_();
-        for (size_t i=0; i<control.size(); i++)
-            std::cout << control.at(a_start) << " , "
-                << control.at(delta_start) << std::endl;
-        std::cout << "=======" << std::endl;
         updateState(state_,control);
         double dx = state_.x - wx_.back();
         double dy = state_.y - wy_.back();
@@ -19,7 +15,6 @@ bool MPC::run() {
         }
         iteration_counter_++;
     }
-    return false;
 }
 
 void MPC::calcReferenceTrajectory_() {
@@ -40,13 +35,11 @@ void MPC::calcReferenceTrajectory_() {
                 ref_(1, i) = wy_.at(closest_index_ + dind);
                 ref_(2, i) = wyaw_.at(closest_index_ + dind);
                 ref_(3, i) = speed_profile_.at(closest_index_ + dind);
-                // dref(0, i) = 0.0;
             } else {
                 ref_(0, i) = wx_.at(wx_.size() - 1);
                 ref_(1, i) = wy_.at(wx_.size() - 1);
                 ref_(2, i) = wyaw_.at(wx_.size() - 1);
                 ref_(3, i) = speed_profile_.at(wx_.size() - 1);
-                // dref(0, i) = 0.0;
             }
         }
 }

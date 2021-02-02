@@ -109,7 +109,7 @@ class MPC {
             vector<double> &wk,
             vector<double> &ws,
             vector<double> &speed_profile) : state_(init_state), wx_(wx), wy_(wy), wyaw_(wyaw), wk_(wk), ws_(ws), speed_profile_(speed_profile){};
-        bool run();
+        void run();
         vector<State> states_;
         vector<REF_M> ref_chunks_;
     private:
@@ -129,7 +129,6 @@ class MPC {
 
 class FG_EVAL{
 public:
-  // Eigen::VectorXd coeeffs;
   REF_M traj_ref_;
 
   FG_EVAL(REF_M traj_ref){
