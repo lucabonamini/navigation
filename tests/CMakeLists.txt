@@ -88,6 +88,16 @@ target_link_libraries(example_mpc
   Python2::NumPy
 )
 
+# Bezier
+add_executable(example_bezier example_bezier.cpp)
+target_link_libraries(example_bezier
+  glog
+  gflags
+  bezier
+  Python2::Python
+  Python2::NumPy
+)
+
 #### TESTS ####
 add_executable(test_quintic_planner test_quintic_planner.cpp)
 target_link_libraries(test_quintic_planner gtest_main quintic_polynomial_planner)

@@ -6,6 +6,7 @@ add_subdirectory (quintic_polynomial_planner)
 add_subdirectory (cubic_spline_planner)
 add_subdirectory (pid)
 add_subdirectory (mpc)
+add_subdirectory (bezier)
 
 option(BUILD_TESTS "Build tests" OFF)
 if (${BUILD_TESTS})
