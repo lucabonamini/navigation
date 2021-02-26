@@ -1,4 +1,7 @@
 #include "pid/pid.h"
+#include "cubic_spline_planner/cubic_spline_planner.h"
+#include "utils/types.h"
+#include "utils/utils.h"
 #include "matplotlibcpp.h"
 
 constexpr int MAX_TIME = 5000;
@@ -24,7 +27,7 @@ int main(int argc, char** argv) {
     State init;
     init.x = rx.front();
     init.y = ry.front();
-    init.theta = std::atan2((ry.at(1)-ry.at(0)),(rx.at(1)-rx.at(0)));
+    init.yaw = std::atan2((ry.at(1)-ry.at(0)),(rx.at(1)-rx.at(0)));
     init.v = 0.1;
     RobotModel rm(init);
     std::vector<double> offtrack_errors;

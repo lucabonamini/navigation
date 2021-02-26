@@ -65,6 +65,7 @@ target_link_libraries(example_pid
   Python2::Python
   Python2::NumPy
 )
+target_include_directories(example_pid PUBLIC ../)
 
 # GA
 add_executable(ga ga.cpp)
