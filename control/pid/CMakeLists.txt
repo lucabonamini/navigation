@@ -42,12 +42,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(${PROJECT_NAME}
-  glog
-  gflags
-  cubic_spline_planner
-)
-
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION /usr/local/lib
   LIBRARY DESTINATION /usr/local/lib

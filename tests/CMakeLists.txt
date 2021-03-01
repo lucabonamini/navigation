@@ -60,22 +60,26 @@ add_executable(example_pid example_pid.cpp)
 target_link_libraries(example_pid
   glog
   gflags
-  cubic_spline_planner
   pid
+  stanley_steer_control
+  cubic_spline_planner
+  models
   Python2::Python
   Python2::NumPy
 )
+target_include_directories(example_pid PUBLIC ../)
 
-# GA
-add_executable(ga ga.cpp)
-target_link_libraries(ga
-  glog
-  gflags
-  cubic_spline_planner
-  pid
-  Python2::Python
-  Python2::NumPy
-)
+##### TODO fix
+# # GA
+# add_executable(ga ga.cpp)
+# target_link_libraries(ga
+#   glog
+#   gflags
+#   cubic_spline_planner
+#   pid
+#   Python2::Python
+#   Python2::NumPy
+# )
 
 # MPC
 add_executable(example_mpc example_mpc.cpp)
