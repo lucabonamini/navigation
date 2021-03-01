@@ -4,7 +4,7 @@ using namespace std;
 
 namespace control {
 double StanleySteerControl::calcCommand(const State &state,
-    const double &cte, 
+    const double &cte,
     const double &ref_yaw) {
         double theta_e = ref_yaw - state.yaw;
         utils::normalizeAngle(theta_e);

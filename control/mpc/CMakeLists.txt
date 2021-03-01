@@ -14,8 +14,8 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpessimizing-move -Wredundant-move")
   endif()
 endif()
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
+# set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+# set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 
 find_package(Eigen3 REQUIRED)
 
@@ -43,9 +43,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME}
-  glog
-  gflags
-  cubic_spline_planner
   ipopt
 )
 
