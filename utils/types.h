@@ -1,6 +1,6 @@
 #pragma once
 
-namespace {
+namespace types {
     struct State {
         double x = 0.0;
         double y = 0.0;

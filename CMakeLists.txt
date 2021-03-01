@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.18.2)
 
 add_subdirectory (planning)
 add_subdirectory (control)
-# add_subdirectory (models)
+add_subdirectory (models)
 
 option(BUILD_TESTS "Build tests" OFF)
 if (${BUILD_TESTS})

@@ -4,6 +4,8 @@
 #include "utils/types.h"
 #include "utils/utils.h"
 
+using namespace types;
+
 namespace control {
 class StanleySteerControl {
     public:

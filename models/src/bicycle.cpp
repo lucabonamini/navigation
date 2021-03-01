@@ -8,6 +8,7 @@ Bicycle::Bicycle(const double &frequency, const double &wb) :
     wb_(wb) {}
 void Bicycle::updateState(State &state, const Controls &controls) {
     state.v += controls.a * 1.0 / frequency_;
+    // state.v = controls.v;
     state.yaw += state.v / wb_ * tan(controls.steer) * 1.0 / frequency_;
     utils::normalizeAngle(state.yaw);
     state.x += state.v * cos(state.yaw) * 1.0 / frequency_;

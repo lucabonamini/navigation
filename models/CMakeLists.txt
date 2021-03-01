@@ -13,13 +13,14 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpessimizing-move -Wredundant-move")
   endif()
 endif()
-# set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 
 include_directories(
   include/
 )
 
-list(APPEND SRCS
+list ( APPEND SRCS
+  src/model.cpp
   src/unicycle.cpp
   src/bicycle.cpp
   src/dynamic_unicycle.cpp
@@ -39,7 +40,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ../../)
+target_include_directories(${PROJECT_NAME} PUBLIC ../)
 
 install(TARGETS ${PROJECT_NAME}
   ARCHIVE DESTINATION /usr/local/lib

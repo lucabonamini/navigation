@@ -1,5 +1,5 @@
 set(CMAKE_CXX_STANDARD 20)
-# set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 #### Setup GoogleTest ####
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -26,9 +26,6 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 # find python libraries
 find_package(Python2 COMPONENTS Interpreter Development NumPy REQUIRED)
 find_package(OpenCV REQUIRED)
-
-# include_directories(test2/)
-# link_directories(../lib/)
 
 # AStar
 add_executable(example_astar example_astar.cpp)
@@ -63,7 +60,7 @@ add_executable(example_pid example_pid.cpp)
 target_link_libraries(example_pid
   glog
   gflags
-  # pid
+  pid
   stanley_steer_control
   cubic_spline_planner
   models
@@ -72,7 +69,7 @@ target_link_libraries(example_pid
 )
 target_include_directories(example_pid PUBLIC ../)
 
-###### TODO fix
+##### TODO fix
 # # GA
 # add_executable(ga ga.cpp)
 # target_link_libraries(ga
