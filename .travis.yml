@@ -2,7 +2,7 @@ language: cpp
 
 compiler:
   - gcc
- 
+
 os: linux
 addons:
   apt:
@@ -18,7 +18,7 @@ addons:
       - g++-9
 
 # the install step will take care of deploying a newer cmake version
-install:    
+install:
   # first we create a directory for the CMake binaries
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
@@ -38,6 +38,9 @@ install:
   - export CXX="g++-9"
 
 before_script:
+  - cd control/mpc/
+  - ./setup_dependencies.sh
+  - cd ../../
   # create a build folder for the out-of-source build
   - mkdir build
   # switch to build directory
