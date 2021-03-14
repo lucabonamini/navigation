@@ -4,12 +4,12 @@ cmake_minimum_required(VERSION 3.18.2)
 set(CMAKE_CXX_STANDARD 20)
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
-  -pedantic -Wall -Wextra -Wcast-align -Wcast-qual \
-  -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 \
+  -pedantic -Wall -Wextra -Wcast-align \
+  -Wdisabled-optimization -Wformat=2 \
   -Winit-self -Wlogical-op -Wmissing-include-dirs -Wnoexcept \
-  -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow \
+  -Woverloaded-virtual -Wredundant-decls -Wshadow \
   -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 \
-  -Wswitch-default -Wundef -Werror -Wunused")
+  -Werror -Wunused")
   if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "9.0")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wpessimizing-move -Wredundant-move")
   endif()
@@ -32,6 +32,12 @@ add_library(${PROJECT_NAME} SHARED
   ${SRCS}
 )
 
+option(BUILD_TESTS "Build tests" OFF)
+if (${BUILD_TESTS})
+  enable_testing()
+  add_subdirectory(test)
+endif()
+
 target_include_directories(${PROJECT_NAME} PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}>
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
@@ -42,10 +48,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-install(TARGETS ${PROJECT_NAME} 
-  ARCHIVE DESTINATION /usr/local/lib 
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION /usr/local/lib
   LIBRARY DESTINATION /usr/local/lib
 )
-install(DIRECTORY include/ 
+install(DIRECTORY include/
   DESTINATION /usr/local/include
 )

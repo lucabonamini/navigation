@@ -3,8 +3,8 @@
 
 using namespace CubicSplinePlanner;
 
-int main(int argc, char** argv) {
-    
+int main() {
+
     std::vector<double> wx {-2.5,0.0,2.5,5.0,7.5,3.0,-1.0};
     std::vector<double> wy {0.7,-6.0,5.0,6.5,0.0,5.0,-2.0};
 
