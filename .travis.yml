@@ -39,9 +39,12 @@ install:
 
 before_script:
   - cd control/mpc/
+  - ls
   - sudo apt install -y gfortran unzip
   - wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.zip && unzip Ipopt-3.12.7.zip && rm Ipopt-3.12.7.zip
-  - cd Ipopt-3.12.7 && ./install_ipopt.sh Ipopt-3.12.7
+  - ls
+  - cd Ipopt-3.12.7
+  - ./install_ipopt.sh Ipopt-3.12.7
   - sudo apt install -y cppad
   - cd ../
   # create a build folder for the out-of-source build
