@@ -2,7 +2,7 @@ language: cpp
 
 compiler:
   - gcc
- 
+
 os: linux
 addons:
   apt:
@@ -18,7 +18,7 @@ addons:
       - g++-9
 
 # the install step will take care of deploying a newer cmake version
-install:    
+install:
   # first we create a directory for the CMake binaries
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
@@ -38,6 +38,17 @@ install:
   - export CXX="g++-9"
 
 before_script:
+  - cd control/mpc/
+  - ls
+  - sudo apt install -y gfortran unzip
+  - wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.7.zip && unzip Ipopt-3.12.7.zip && rm Ipopt-3.12.7.zip
+  - ls
+  - cd Ipopt-3.12.7
+  - mv ../install_ipopt.sh .
+  - chmod +x install_ipopt.sh
+  - sudo ./install_ipopt.sh .
+  - sudo apt install -y cppad
+  - cd ../
   # create a build folder for the out-of-source build
   - mkdir build
   # switch to build directory
