@@ -45,6 +45,7 @@ before_script:
   - ls
   - cd Ipopt-3.12.7
   - mv ../install_ipopt.sh .
+  - chmod +x install_ipopt.sh
   - ./install_ipopt.sh Ipopt-3.12.7
   - sudo apt install -y cppad
   - cd ../
