@@ -35,4 +35,46 @@ void normalizeAngle(T &angle) {
     }
     return;
 }
+
+/*!
+* \brief normalize_angle_positive
+*
+*        Normalizes the angle to be 0 to 2*M_PI
+*        It takes and returns radians.
+*/
+static inline double normalize_angle_positive(double angle) {
+    return fmod(fmod(angle, 2.0*M_PI) + 2.0*M_PI, 2.0*M_PI);
+}
+
+
+/*!
+* \brief normalize
+*
+* Normalizes the angle to be -M_PI circle to +M_PI circle
+* It takes and returns radians.
+*
+*/
+static inline double normalize_angle(double angle) {
+    double a = normalize_angle_positive(angle);
+    if (a > M_PI)
+        a -= 2.0 *M_PI;
+    return a;
+}
+
+
+/*!
+* \function
+* \brief shortest_angular_distance
+*
+* Given 2 angles, this returns the shortest angular
+* difference.  The inputs and ouputs are of course radians.
+*
+* The result
+* would always be -pi <= result <= pi.  Adding the result
+* to "from" will always get you an equivelent angle to "to".
+*/
+
+static inline double shortest_angular_distance(double from, double to) {
+    return normalize_angle(to-from);
+}
 } // namespace utils
