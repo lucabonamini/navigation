@@ -77,4 +77,12 @@ static inline double normalize_angle(double angle) {
 static inline double shortest_angular_distance(double from, double to) {
     return normalize_angle(to-from);
 }
+
+template <typename T>
+T sum_of_power(std::vector<T> value_list) {
+    T sum = 0;
+    for(T item:value_list)
+        sum += item*item;
+    return sum;
+}
 } // namespace utils
