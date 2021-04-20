@@ -6,7 +6,7 @@ namespace control {
                 pow((input.target_point.y - input.robot_state.y),2));
         double desired_yaw = atan2((input.target_point.y - input.robot_state.y),
             (input.target_point.x - input.robot_state.x));
-        double diff_orientation = utils::shortest_angular_distance(input.robot_state.yaw,
+        double diff_orientation = utils::shortestAngularDistance(input.robot_state.yaw,
             desired_yaw);
         double omega = atan2(2 * sin(diff_orientation) / dist, 1.0);
         return types::Controls{.steer = omega, .v = input.desired_velocity, .a = 0.0};

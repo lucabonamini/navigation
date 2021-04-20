@@ -45,7 +45,7 @@ int main() {
             << "px: " << point.at(0) << " , "
             << "py: " << point.at(1) << std::endl;
         // auto cte = d_uni.calcTrackError(state,rx.at(closest_ind),ry.at(closest_ind));
-        auto lad = state.v * 1.0/10.0;
+        auto lad = state.v * 1.0;
         // auto lad = 1.0;
         auto id = round(lad / 0.1) + closest_ind;
         if (id > rx.size() - 1) {
@@ -57,11 +57,6 @@ int main() {
             .y = ry.at(id)};
         input.desired_velocity = 0.5;
         auto cc = pp.calcCommands(input);
-        if (cc.steer < -30*M_PI/180) {
-            cc.steer = -30*M_PI/180;
-        } else if (cc.steer > 30*M_PI/180) {
-            cc.steer = 30*M_PI/180;
-        }
 
         Controls controls {.steer = cc.steer, .v = cc.v, .a = 0.0};
 

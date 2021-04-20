@@ -6,7 +6,7 @@ namespace Frenet {
             for (size_t i = 0; i < path.x.size(); ++i) {
                 double distance = std::sqrt(std::pow((path.x.at(i)-obstacle.x),2) +
                     std::pow((path.y.at(i)-obstacle.y),2));
-                if (distance <= 0.5) {
+                if (distance <= 1.0) {
                     return true;
                 }
             }
@@ -14,11 +14,11 @@ namespace Frenet {
         return false;
     }
     void calculatePathCost(FrenetPath& path, const Input& input) {
-        double n = path.s.size();
-        double m = path.d.size();
-        double Jp = utils::sum_of_power(path.d_ddd) / m;
-        double Js = utils::sum_of_power(path.s_ddd) / n;
-        double Jd = utils::sum_of_power(path.d) / m;
+        double s_size = path.s.size();
+        double d_size = path.d.size();
+        double Jp = utils::sumOfPower(path.d_ddd) / d_size;
+        double Js = utils::sumOfPower(path.s_ddd) / s_size;
+        double Jd = utils::sumOfPower(path.d) / d_size;
         double ds = std::pow((input.target_speed - path.s_d.back()), 2);
 
         double lateral_distance = 0.0;

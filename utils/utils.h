@@ -26,60 +26,25 @@ void findClosestIndex(int &index,
 }
 
 template <typename T>
-void normalizeAngle(T &angle) {
-    while (angle > M_PI) {
-        angle -= 2.0 * M_PI;
-    }
-    while (angle < -M_PI) {
-        angle += 2.0 * M_PI;
-    }
-    return;
-}
-
-/*!
-* \brief normalize_angle_positive
-*
-*        Normalizes the angle to be 0 to 2*M_PI
-*        It takes and returns radians.
-*/
-static inline double normalize_angle_positive(double angle) {
+T normalizeAnglePositive(T angle) {
     return fmod(fmod(angle, 2.0*M_PI) + 2.0*M_PI, 2.0*M_PI);
 }
 
-
-/*!
-* \brief normalize
-*
-* Normalizes the angle to be -M_PI circle to +M_PI circle
-* It takes and returns radians.
-*
-*/
-static inline double normalize_angle(double angle) {
-    double a = normalize_angle_positive(angle);
+template <typename T>
+T normalizeAngle(T angle) {
+    T a = normalizeAnglePositive(angle);
     if (a > M_PI)
         a -= 2.0 *M_PI;
     return a;
 }
 
-
-/*!
-* \function
-* \brief shortest_angular_distance
-*
-* Given 2 angles, this returns the shortest angular
-* difference.  The inputs and ouputs are of course radians.
-*
-* The result
-* would always be -pi <= result <= pi.  Adding the result
-* to "from" will always get you an equivelent angle to "to".
-*/
-
-static inline double shortest_angular_distance(double from, double to) {
-    return normalize_angle(to-from);
+template <typename T>
+T shortestAngularDistance(T from, T to) {
+    return normalizeAngle(to-from);
 }
 
 template <typename T>
-T sum_of_power(std::vector<T> value_list) {
+T sumOfPower(std::vector<T> value_list) {
     T sum = 0;
     for(T item:value_list)
         sum += item*item;
