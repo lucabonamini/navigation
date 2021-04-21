@@ -4,20 +4,18 @@
 #include <array>
 #include <limits>
 #include <math.h>
-#include <vector>
 
 namespace utils {
-template <typename T>
-void findClosestIndex(int &index,
-    const std::array<T,2> point,
-    const std::vector<T> &x,
-    const std::vector<T> &y) {
-        T closest_distance = std::numeric_limits<T>::max();
-        for (size_t i = index; i < x.size(); i++) {
-            T g_x = x.at(i);
-            T g_y = y.at(i);
-            T current_closest_distance = pow((point.at(0) - g_x),2) +
-                pow((point.at(1) - g_y),2);
+
+static inline void findClosestIndex(int &index,
+    const types::Point& point,
+    const types::Path& path) {
+        double closest_distance = std::numeric_limits<double>::max();
+        for (size_t i = index; i < path.size(); i++) {
+            double g_x = path.at(i).point.x;
+            double g_y = path.at(i).point.y;
+            double current_closest_distance = pow((point.x - g_x),2) +
+                pow((point.y - g_y),2);
             if (current_closest_distance < closest_distance) {
                 closest_distance = current_closest_distance;
                 index = i;

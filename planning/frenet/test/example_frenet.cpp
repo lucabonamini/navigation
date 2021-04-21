@@ -6,7 +6,7 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 
-// #define REALTIME_VISUALIZATION
+#define REALTIME_VISUALIZATION
 
 constexpr int MAX_ITERATION = 5000;
 constexpr double TARGET_SPEED = 0.5; // m/s

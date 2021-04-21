@@ -1,6 +1,7 @@
 #include "models/dynamic_unicycle.h"
 
 using namespace std;
+using namespace types;
 
 namespace model {
 DynamicUnicycle::DynamicUnicycle(const double &frequency) :

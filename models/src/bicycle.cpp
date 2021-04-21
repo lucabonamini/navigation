@@ -1,6 +1,7 @@
 #include "models/bicycle.h"
 
 using namespace std;
+using namespace types;
 
 namespace model {
 Bicycle::Bicycle(const double &frequency, const double &wb) :

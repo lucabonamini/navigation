@@ -4,25 +4,29 @@
 #include "utils/utils.h"
 #include <string>
 
-struct Point {
-    double x = 0.0;
-    double y = 0.0;
-};
-
 struct Input {
     types::State robot_state;
-    Point target_point;
-    double cte = 0.0;
-    double desired_velocity = 0.0;
 };
 
 namespace control {
     class PurePursuit {
     public:
     static std::string model_type;
-    PurePursuit(){};
+    PurePursuit(const double& target_velocity,
+        const double& lookahead_distance,
+        const double& resolution,
+        const types::Path& path);
     ~PurePursuit(){};
-    types::Controls calcCommands(const Input &input) ;
+    types::Point calcTargetPoint(const types::State& robot_state);
+    types::Controls calculate(const types::Point &target_point,
+    const types::State& robot_state);
+    types::Controls computeCommands(const Input& input);
+    private:
+    double target_velocity_ = 0.0;
+    double lookahead_distance_ = 0.0;
+    double resolution_ = 0.0;
+    types::Path path_;
+    int closest_index_ = 0;
     };
 
     // class AdaptivePurePursuit : public PurePursuit {

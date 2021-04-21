@@ -18,11 +18,13 @@ int main() {
 
     std::vector<double> rx,ry,ryaw;
     CubicSplinePlanner::Spline2D csp(wx,wy);
+    Path path;
     for (double i=0; i<csp.s.back(); i+=0.1) {
         auto p = csp.calc_position(i);
         rx.push_back(p.at(0));
         ry.push_back(p.at(1));
         ryaw.push_back(csp.calc_yaw(i));
+        path.push_back(Position{.point={.x=p.at(0),.y=p.at(1)},.yaw=csp.calc_yaw(i)});
     }
 
     // Initial conditions
@@ -41,13 +43,12 @@ int main() {
     while(time < MAX_TIME) {
         // std::array<double,2> point {state.x,state.y};
         d_uni.calcFrontAxleDist(state);
-        std::array<double,2> point {d_uni.fx_,d_uni.fy_};
-        utils::findClosestIndex(closest_ind,point,rx,ry);
-        std::cout << "id: " << closest_ind << " , "
-            << "x: " << rx.at(closest_ind) << " , "
-            << "y: " << ry.at(closest_ind) << " , "
-            << "px: " << point.at(0) << " , "
-            << "py: " << point.at(1) << std::endl;
+        utils::findClosestIndex(closest_ind,{d_uni.fx_,d_uni.fy_},path);
+        // std::cout << "id: " << closest_ind << " , "
+        //     << "x: " << rx.at(closest_ind) << " , "
+        //     << "y: " << ry.at(closest_ind) << " , "
+        //     << "px: " << point.at(0) << " , "
+        //     << "py: " << point.at(1) << std::endl;
         auto cte = d_uni.calcTrackError(state,rx.at(closest_ind),ry.at(closest_ind));
         auto steer = stanley_controller.calcCommand(state,cte,ryaw.at(closest_ind));
         steer = pid.calcCommand(steer);

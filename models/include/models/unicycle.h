@@ -7,8 +7,8 @@ class Unicycle : public RobotModel {
     public:
     Unicycle(const double &frequency);
     ~Unicycle(){};
-    void updateState(State &state, const Controls &controls);
-    double calcTrackError(const State &state, const double &ref_x, const double &ref_y);
+    void updateState(types::State &state, const types::Controls &controls);
+    double calcTrackError(const types::State &state, const double &ref_x, const double &ref_y);
     private:
     double frequency_ = 0.0;
 };

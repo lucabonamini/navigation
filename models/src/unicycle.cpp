@@ -1,6 +1,7 @@
 #include "models/unicycle.h"
 
 using namespace std;
+using namespace types;
 
 namespace model {
 Unicycle::Unicycle(const double &frequency) : frequency_(frequency) {}

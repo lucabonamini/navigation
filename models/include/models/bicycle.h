@@ -7,9 +7,9 @@ class Bicycle : public RobotModel {
     public:
     Bicycle(const double &frequency, const double &wb);
     ~Bicycle(){};
-    void updateState(State &state, const Controls &controls) override;
-    double calcTrackError(const State &state, const double &ref_x, const double &ref_y) override;
-    void calcFrontAxleDist(const State &state);
+    void updateState(types::State &state, const types::Controls &controls) override;
+    double calcTrackError(const types::State &state, const double &ref_x, const double &ref_y) override;
+    void calcFrontAxleDist(const types::State &state);
     double fx_ = 0.0;
     double fy_ = 0.0;
     private:
