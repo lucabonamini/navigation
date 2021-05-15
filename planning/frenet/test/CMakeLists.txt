@@ -13,3 +13,4 @@ target_link_libraries(example_frenet
   Python2::NumPy
   ${OpenCV_LIBS}
 )
+target_include_directories(example_frenet PUBLIC ../../../)

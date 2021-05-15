@@ -11,3 +11,4 @@ target_link_libraries(example_quintic_planner
   Python2::Python
   Python2::NumPy
 )
+target_include_directories(example_quintic_planner PUBLIC ../../../)
