@@ -18,11 +18,13 @@ int main() {
 
     std::vector<double> rx,ry,ryaw;
     CubicSplinePlanner::Spline2D csp(wx,wy);
+    Path path;
     for (double i=0; i<csp.s.back(); i+=0.1) {
         auto p = csp.calc_position(i);
         rx.push_back(p.at(0));
         ry.push_back(p.at(1));
         ryaw.push_back(csp.calc_yaw(i));
+        path.push_back(Position{.point={.x=p.at(0),.y=p.at(1)},.yaw=csp.calc_yaw(i)});
     }
 
     // Initial conditions
@@ -39,8 +41,9 @@ int main() {
     double ref_velocity = 30/3.6; // m/s
     int closest_ind = 0;
     while(time < MAX_TIME) {
-        // std::array<double,2> point {state.x,state.y};
         d_uni.calcFrontAxleDist(state);
+        utils::findClosestIndex(closest_ind,{d_uni.fx_,d_uni.fy_},path);
+
         std::array<double,2> point {d_uni.fx_,d_uni.fy_};
         utils::findClosestIndex(closest_ind,point,rx,ry);
         std::cout << "id: " << closest_ind << " , "
@@ -63,9 +66,6 @@ int main() {
             acc = 0.2;
         }
         Controls controls {.steer = steer, .v = 0.0, .a = 0.2*acc};
-        // Controls controls {.steer = steer, .v = 0.1, .a = 0.0};
-        // Controls controls {.steer = steer, .v = 0.0, .a = acc};
-
 
         d_uni.updateState(state,controls);
 
