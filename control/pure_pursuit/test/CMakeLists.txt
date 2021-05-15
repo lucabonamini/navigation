@@ -13,4 +13,4 @@ target_link_libraries(example_pure_pursuit
   Python2::Python
   Python2::NumPy
 )
-target_include_directories(example_pure_pursuit PUBLIC ../)
+target_include_directories(example_pure_pursuit PUBLIC ../../../)

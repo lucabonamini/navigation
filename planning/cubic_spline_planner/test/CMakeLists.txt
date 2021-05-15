@@ -11,3 +11,4 @@ target_link_libraries(example_cubic_spline_planner
   Python2::Python
   Python2::NumPy
 )
+target_include_directories(example_cubic_spline_planner PUBLIC ../../../)

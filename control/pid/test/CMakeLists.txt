@@ -14,7 +14,7 @@ target_link_libraries(example_pid
   Python2::Python
   Python2::NumPy
 )
-target_include_directories(example_pid PUBLIC ../)
+target_include_directories(example_pid PUBLIC ../../../)
 
 ##### TODO fix
 # # GA
