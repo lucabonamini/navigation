@@ -2,6 +2,7 @@
 
 #include "utils/types.h"
 #include "utils/utils.h"
+#include <math.h>
 
 namespace model {
 class RobotModel {

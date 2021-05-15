@@ -1,5 +1,4 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/lucabonamini/navigation/badge)](https://www.codefactor.io/repository/github/lucabonamini/navigation)
-
+[![CodeFactor](https://www.codefactor.io/repository/github/lucabonamini/navigation/badge)](https://www.codefactor.io/repository/github/lucabonamini/navigation) [![Build Status](https://travis-ci.org/lucabonamini/navigation.svg?branch=main)](https://travis-ci.org/lucabonamini/navigation)
 # navigation
 
 The purpose of this repository is to collect various algorithms that can be used for robots autonomous navigation

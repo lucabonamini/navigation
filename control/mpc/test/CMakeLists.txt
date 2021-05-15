@@ -14,3 +14,4 @@ target_link_libraries(example_mpc
   Python2::NumPy
 )
 target_include_directories(example_mpc PUBLIC ../../../)
+)

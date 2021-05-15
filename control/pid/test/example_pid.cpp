@@ -41,14 +41,16 @@ int main() {
     double ref_velocity = 30/3.6; // m/s
     int closest_ind = 0;
     while(time < MAX_TIME) {
-        // std::array<double,2> point {state.x,state.y};
         d_uni.calcFrontAxleDist(state);
         utils::findClosestIndex(closest_ind,{d_uni.fx_,d_uni.fy_},path);
-        // std::cout << "id: " << closest_ind << " , "
-        //     << "x: " << rx.at(closest_ind) << " , "
-        //     << "y: " << ry.at(closest_ind) << " , "
-        //     << "px: " << point.at(0) << " , "
-        //     << "py: " << point.at(1) << std::endl;
+
+        std::array<double,2> point {d_uni.fx_,d_uni.fy_};
+        utils::findClosestIndex(closest_ind,point,rx,ry);
+        std::cout << "id: " << closest_ind << " , "
+            << "x: " << rx.at(closest_ind) << " , "
+            << "y: " << ry.at(closest_ind) << " , "
+            << "px: " << point.at(0) << " , "
+            << "py: " << point.at(1) << std::endl;
         auto cte = d_uni.calcTrackError(state,rx.at(closest_ind),ry.at(closest_ind));
         auto steer = stanley_controller.calcCommand(state,cte,ryaw.at(closest_ind));
         steer = pid.calcCommand(steer);
@@ -64,9 +66,6 @@ int main() {
             acc = 0.2;
         }
         Controls controls {.steer = steer, .v = 0.0, .a = 0.2*acc};
-        // Controls controls {.steer = steer, .v = 0.1, .a = 0.0};
-        // Controls controls {.steer = steer, .v = 0.0, .a = acc};
-
 
         d_uni.updateState(state,controls);
 
