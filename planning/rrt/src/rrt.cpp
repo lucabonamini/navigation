@@ -108,8 +108,7 @@ bool RRT::calcDistToGoal(const std::vector<Node*>& nodes_list,
 
 std::vector<Node*> RRT::generateFinalPath(const std::vector<Node*>& nodes_list,
     const size_t& goal_index,
-    Node* end_node,
-    const int& img_reso) {
+    Node* end_node) {
         std::vector<Node*> path;
         path.push_back(end_node);
         Node* node = nodes_list.at(goal_index);
@@ -169,7 +168,7 @@ std::vector<Node*> RRT::planning(const Input& input) {
         if (calcDistToGoal(nodes_list,input.end_node)) {
             auto final_node = expandTree(nodes_list.back(),input.end_node,config_.expand_distance);
             if (!checkCollision(final_node,input.obstacles)) {
-                auto path = generateFinalPath(nodes_list,nodes_list.size()-1,input.end_node,bg,img_reso);
+                auto path = generateFinalPath(nodes_list,nodes_list.size()-1,input.end_node);
                 return path;
             }
         }

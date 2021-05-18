@@ -57,8 +57,7 @@ class RRT {
         Node* end_node);
     std::vector<Node*> generateFinalPath(const std::vector<Node*>& nodes_list,
         const size_t& goal_index,
-        Node* end_node,
-        const int& img_reso);
+        Node* end_node);
     Config config_;
     std::random_device goal_rd_;
     std::mt19937 goal_gen_;
