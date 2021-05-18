@@ -6,7 +6,7 @@ namespace model {
 Bicycle::Bicycle(const double &frequency, const double &wb) :
     frequency_(frequency),
     wb_(wb) {}
-void Bicycle::updateState(State &state, const Controls &controls) {
+void Bicycle::updateState(types::State &state, const types::Controls &controls) {
     state.v += controls.a * 1.0 / frequency_;
     // state.v = controls.v;
     state.yaw += state.v / wb_ * tan(controls.steer) * 1.0 / frequency_;
@@ -14,11 +14,11 @@ void Bicycle::updateState(State &state, const Controls &controls) {
     state.x += state.v * cos(state.yaw) * 1.0 / frequency_;
     state.y += state.v * sin(state.yaw) * 1.0 / frequency_;
 }
-void Bicycle::calcFrontAxleDist(const State &state) {
+void Bicycle::calcFrontAxleDist(const types::State &state) {
     fx_ = state.x + wb_ * cos(state.yaw);
     fy_ = state.y + wb_ * sin(state.yaw);
 }
-double Bicycle::calcTrackError(const State &state,
+double Bicycle::calcTrackError(const types::State &state,
     const double &ref_x,
     const double &ref_y) {
         array<double,2> front_axle_vec = {-cos(state.yaw + M_PI_2),-sin(state.yaw + M_PI_2)};
