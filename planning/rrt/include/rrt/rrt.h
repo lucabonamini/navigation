@@ -4,11 +4,6 @@
 #include <random>
 #include <vector>
 
-
-#include<opencv2/opencv.hpp>
-#include<opencv2/core/core.hpp>
-#include<opencv2/highgui/highgui.hpp>
-
 class Node {
     public:
     Node(){};
@@ -63,7 +58,6 @@ class RRT {
     std::vector<Node*> generateFinalPath(const std::vector<Node*>& nodes_list,
         const size_t& goal_index,
         Node* end_node,
-        cv::Mat& bg,
         const int& img_reso);
     Config config_;
     std::random_device goal_rd_;

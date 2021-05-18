@@ -93,23 +93,6 @@ bool RRT::checkCollision(Node* node,
                 return true;
             }
         }
-        // if (node == NULL) {
-        //     return true;
-        // }
-
-        // for (const auto& ob : obstacles) {
-        //     std::vector<double> dx_list, dy_list;
-        //     for (size_t i = 0; i < node->path_x.size(); ++i) {
-        //         dx_list.push_back(ob.x - node->path_x.at(i));
-        //         dy_list.push_back(ob.y - node->path_y.at(i));
-        //     }
-        //     for (size_t j = 0; j < dx_list.size(); ++j) {
-        //         auto dist = pow((dx_list.at(j)),2) + pow((dy_list.at(j)),2);
-        //         if (dist <= pow(ob.size,2)) {
-        //             return true;
-        //         }
-        //     }
-        // }
         return false;
 }
 
@@ -126,19 +109,18 @@ bool RRT::calcDistToGoal(const std::vector<Node*>& nodes_list,
 std::vector<Node*> RRT::generateFinalPath(const std::vector<Node*>& nodes_list,
     const size_t& goal_index,
     Node* end_node,
-    cv::Mat& bg,
     const int& img_reso) {
         std::vector<Node*> path;
         path.push_back(end_node);
         Node* node = nodes_list.at(goal_index);
         while (node->parent != NULL) {
-            cv::line(
-                bg,
-                cv::Point((int)((node->x-config_.min_rand)*img_reso), (int)((node->y-config_.min_rand)*img_reso)),
-                cv::Point((int)((node->parent->x-config_.min_rand)*img_reso), (int)((node->parent->y-config_.min_rand)*img_reso)),
-                cv::Scalar(255,0,255), 5);
-            cv::imshow("rrt", bg);
-            cv::waitKey(50);
+            // cv::line(
+            //     bg,
+            //     cv::Point((int)((node->x-config_.min_rand)*img_reso), (int)((node->y-config_.min_rand)*img_reso)),
+            //     cv::Point((int)((node->parent->x-config_.min_rand)*img_reso), (int)((node->parent->y-config_.min_rand)*img_reso)),
+            //     cv::Scalar(255,0,255), 5);
+            // cv::imshow("rrt", bg);
+            // cv::waitKey(50);
             path.push_back(node);
             node = node->parent;
         }
@@ -147,18 +129,18 @@ std::vector<Node*> RRT::generateFinalPath(const std::vector<Node*>& nodes_list,
 
 std::vector<Node*> RRT::planning(const Input& input) {
 
-    //visualization
-	cv::namedWindow("rrt", cv::WINDOW_NORMAL);
-	int img_size = (int)(config_.max_rand - config_.min_rand);
-	int img_reso = 50;
-    cv::Mat bg(img_size * img_reso, img_size * img_reso,
-             CV_8UC3, cv::Scalar(255,255,255));
+    // //visualization
+	// cv::namedWindow("rrt", cv::WINDOW_NORMAL);
+	// int img_size = (int)(config_.max_rand - config_.min_rand);
+	// int img_reso = 50;
+    // cv::Mat bg(img_size * img_reso, img_size * img_reso,
+    //          CV_8UC3, cv::Scalar(255,255,255));
 
-    cv::circle(bg, cv::Point((int)((input.start_node->x-config_.min_rand)*img_reso), (int)((input.start_node->y-config_.min_rand)*img_reso)), 20, cv::Scalar(0,0,255), -1);
-	cv::circle(bg, cv::Point((int)((input.end_node->x-config_.min_rand)*img_reso), (int)((input.end_node->y-config_.min_rand)*img_reso)), 20, cv::Scalar(255,0,0), -1);
-	for(auto item:input.obstacles){
-      cv::circle(bg, cv::Point((int)((item.x-config_.min_rand)*img_reso), (int)((item.y-config_.min_rand)*img_reso)), (int)item.size * img_reso, cv::Scalar(0,0,0), -1);
-	}
+    // cv::circle(bg, cv::Point((int)((input.start_node->x-config_.min_rand)*img_reso), (int)((input.start_node->y-config_.min_rand)*img_reso)), 20, cv::Scalar(0,0,255), -1);
+	// cv::circle(bg, cv::Point((int)((input.end_node->x-config_.min_rand)*img_reso), (int)((input.end_node->y-config_.min_rand)*img_reso)), 20, cv::Scalar(255,0,0), -1);
+	// for(auto item:input.obstacles){
+    //   cv::circle(bg, cv::Point((int)((item.x-config_.min_rand)*img_reso), (int)((item.y-config_.min_rand)*img_reso)), (int)item.size * img_reso, cv::Scalar(0,0,0), -1);
+	// }
 
     std::vector<Node*> nodes_list;
     nodes_list.push_back(input.start_node);
@@ -174,14 +156,14 @@ std::vector<Node*> RRT::planning(const Input& input) {
         new_node->parent = nearest_node;
         if (!checkCollision(new_node,input.obstacles)) {
             nodes_list.push_back(new_node);
-            //visualization
-            cv::line(
-                bg,
-                cv::Point((int)((new_node->x-config_.min_rand)*img_reso), (int)((new_node->y-config_.min_rand)*img_reso)),
-                cv::Point((int)((nearest_node->x-config_.min_rand)*img_reso), (int)((nearest_node->y-config_.min_rand)*img_reso)),
-                cv::Scalar(0,255,0), 5);
-            cv::imshow("rrt", bg);
-            cv::waitKey(50);
+            // //visualization
+            // cv::line(
+            //     bg,
+            //     cv::Point((int)((new_node->x-config_.min_rand)*img_reso), (int)((new_node->y-config_.min_rand)*img_reso)),
+            //     cv::Point((int)((nearest_node->x-config_.min_rand)*img_reso), (int)((nearest_node->y-config_.min_rand)*img_reso)),
+            //     cv::Scalar(0,255,0), 5);
+            // cv::imshow("rrt", bg);
+            // cv::waitKey(50);
         }
 
         if (calcDistToGoal(nodes_list,input.end_node)) {
