@@ -6,7 +6,5 @@ find_package(OpenCV REQUIRED)
 add_executable(example_rrt example_rrt.cpp)
 target_link_libraries(example_rrt
   rrt
-  -lopencv_core
-  -lopencv_imgproc
-  -lopencv_highgui
+  ${OpenCV_LIBS}
 )

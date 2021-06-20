@@ -36,21 +36,14 @@ int main() {
     // model::DynamicUnicycle d_uni(50.0);
     model::Bicycle d_uni(10.0,0.5);
     control::StanleySteerControl stanley_controller;
-    control::Pid pid(1.26836,5.37114e-07,1.26836);    
-    
+    control::Pid pid(1.26836,5.37114e-07,1.26836);
+
     double ref_velocity = 30/3.6; // m/s
     int closest_ind = 0;
     while(time < MAX_TIME) {
         d_uni.calcFrontAxleDist(state);
         utils::findClosestIndex(closest_ind,{d_uni.fx_,d_uni.fy_},path);
 
-        std::array<double,2> point {d_uni.fx_,d_uni.fy_};
-        utils::findClosestIndex(closest_ind,point,rx,ry);
-        std::cout << "id: " << closest_ind << " , "
-            << "x: " << rx.at(closest_ind) << " , "
-            << "y: " << ry.at(closest_ind) << " , "
-            << "px: " << point.at(0) << " , "
-            << "py: " << point.at(1) << std::endl;
         auto cte = d_uni.calcTrackError(state,rx.at(closest_ind),ry.at(closest_ind));
         auto steer = stanley_controller.calcCommand(state,cte,ryaw.at(closest_ind));
         steer = pid.calcCommand(steer);
