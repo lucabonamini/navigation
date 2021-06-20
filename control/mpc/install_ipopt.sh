@@ -37,9 +37,9 @@ cd $srcdir/ThirdParty/Mumps
 
 # build everything
 cd $srcdir
-./configure --prefix=$prefix coin_skip_warn_cxxflags=yes \
+./configure --prefix=$prefix/include coin_skip_warn_cxxflags=yes \
     --with-blas="$prefix/lib/libcoinblas.a -lgfortran" \
     --with-lapack=$prefix/lib/libcoinlapack.a
 make
 make test
-make -j1 install
+sudo make install

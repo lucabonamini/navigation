@@ -1,7 +1,7 @@
 set(CMAKE_CXX_STANDARD 20)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
-find_package(Python2 COMPONENTS Interpreter Development NumPy REQUIRED)
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
 
 add_executable(example_pid example_pid.cpp)
 target_link_libraries(example_pid
@@ -11,11 +11,9 @@ target_link_libraries(example_pid
   stanley_steer_control
   cubic_spline_planner
   models
-  Python2::Python
-  Python2::NumPy
+  Python3::Python
+  Python3::Module
 )
-
-target_include_directories(example_pid PUBLIC ../../../)
 
 ##### TODO fix
 # # GA
