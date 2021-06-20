@@ -8,6 +8,7 @@ namespace types {
         double y = 0.0;
         double yaw = 0.0;
         double v = 0.0;
+        double w = 0.0;
     };
     struct Controls {
         double steer = 0.0;
@@ -25,4 +26,5 @@ namespace types {
 
     using Track = std::vector<Point>;
     using Path = std::vector<Position>;
+    using Traj = std::vector<State>;
 }
