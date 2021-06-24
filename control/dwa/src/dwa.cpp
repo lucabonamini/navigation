@@ -53,21 +53,24 @@ DynamicWindow DWA::calcDynamicWindow() {
 }
 
 ::types::Traj DWA::calcTrajectory(const double &lin_vel,
-  const double &ang_vel) {
+  const double &ang_vel,
+  const ::types::State &state) {
     ::types::Traj traj;
     double time = 0.0;
+    auto tmp = state;
+    traj.push_back(tmp);
     while (time <= config_.prediction_time) {
-      unicycle_->updateState(state_, ::types::Controls{.steer=ang_vel,.v=lin_vel,.a=0.0});
-      traj.push_back(::types::State{.x=state_.x,.y=state_.y,.yaw=state_.yaw,.v=state_.v,.w=state_.w});
+      unicycle_->updateState(tmp, ::types::Controls{.steer=ang_vel,.v=lin_vel,.a=0.0});
+      traj.push_back(::types::State{.x=tmp.x,.y=tmp.y,.yaw=tmp.yaw,.v=tmp.v,.w=tmp.w});
       time += 1.0/config_.dt;
     }
     return traj;
 }
 
-double DWA::calcToGoalCost() {
+double DWA::calcToGoalCost(const ::types::Traj &trajectory) {
   double goal_magnitude = sqrt(pow(goal_.x,2) + pow(goal_.y,2));
-  double traj_magnitude = sqrt(pow(state_.x,2) + pow(state_.y,2));
-  double dot_product = (goal_.x * state_.x) + (goal_.y * state_.y);
+  double traj_magnitude = sqrt(pow(trajectory.back().x,2) + pow(trajectory.back().y,2));
+  double dot_product = (goal_.x * trajectory.back().x) + (goal_.y * trajectory.back().y);
   double error = dot_product / (goal_magnitude * traj_magnitude);
   double error_angle = std::acos(error);
   double cost = config_.to_goal_cost_gain * error_angle;
@@ -80,7 +83,7 @@ double DWA::calcSpeedCost(const double &last_lin_vel) {
 
 double DWA::calcObstacleCost(const ::types::Traj &trajectory) {
   double min = std::numeric_limits<double>::max();
-  for (size_t i = 0; i < trajectory.size(); ++i) {
+  for (size_t i = 0; i < trajectory.size(); i+=2) {
     for (size_t j = 0; j < obstacles_.size(); ++j) {
       double dx = trajectory.at(i).x - obstacles_.at(j).x;
       double dy = trajectory.at(i).y - obstacles_.at(j).y;
@@ -88,7 +91,7 @@ double DWA::calcObstacleCost(const ::types::Traj &trajectory) {
       if (r <= config_.robot_radius) {
         return std::numeric_limits<double>::max();
       }
-      if (min > r ) {
+      if (min >= r ) {
         min = r;
       }
     }
@@ -97,20 +100,21 @@ double DWA::calcObstacleCost(const ::types::Traj &trajectory) {
 }
 
 double DWA::calcTrajectoryCost(const ::types::Traj &trajectory) {
-  double to_goal_cost = calcToGoalCost();
-  auto speed_cost = calcSpeedCost(state_.v);
-  auto obstacle_cost = calcObstacleCost(trajectory);
-  auto total_cost = to_goal_cost + speed_cost + obstacle_cost;
-  return total_cost;
+    double to_goal_cost = calcToGoalCost(trajectory);
+    auto speed_cost = calcSpeedCost(trajectory.back().v);
+    auto obstacle_cost = calcObstacleCost(trajectory);
+    auto total_cost = to_goal_cost + speed_cost + obstacle_cost;
+    return total_cost;
 }
 
 ::types::Controls DWA::calcBestControls(const DynamicWindow &dw) {
   ::types::Traj best_trajectory;
   ::types::Controls best_controls;
+  auto tmp_state = state_;
   double min_cost = std::numeric_limits<double>::max();
   for (double v = dw.min_lin_vel_limit; v <= dw.max_lin_vel_limit; v += config_.lin_vel_resolution) {
     for (double w = dw.min_ang_vel_limit; w <= dw.max_ang_vel_limit; w += config_.ang_vel_resolution) {
-      auto traj = calcTrajectory(v, w);
+      auto traj = calcTrajectory(v, w, tmp_state);
       auto total_cost = calcTrajectoryCost(traj);
       if (min_cost >= total_cost) {
         min_cost = total_cost;

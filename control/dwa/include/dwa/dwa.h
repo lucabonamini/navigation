@@ -19,9 +19,10 @@ private:
 DynamicWindow calcDynamicWindow();
 ::types::Controls calcBestControls(const DynamicWindow &dw);
 ::types::Traj calcTrajectory(const double &lin_vel,
-    const double &ang_vel);
+    const double &ang_vel,
+    const ::types::State &state);
 double calcTrajectoryCost(const ::types::Traj &trajectory);
-double calcToGoalCost();
+double calcToGoalCost(const ::types::Traj &trajectory);
 double calcSpeedCost(const double& last_lin_vel);
 double calcObstacleCost(const ::types::Traj &trajectory);
 bool isGoalReached();
